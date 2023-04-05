@@ -446,7 +446,7 @@ namespace ST.Library.UI.NodeEditor
             get { return _Guid; }
         }
 
-        private bool _LetGetOptions = false;
+        private bool _LetGetOptions = true;
         /// <summary>
         /// 获取或设置是否允许外部访问STNodeOption
         /// </summary>

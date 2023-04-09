@@ -629,6 +629,7 @@ namespace ST.Library.UI.NodeEditor
 
         protected override void WndProc(ref Message m) {
             base.WndProc(ref m);
+            return; //TODO: returning early for now as this throws a lot of errors
             try {
                 Point pt = new Point(((int)m.LParam) >> 16, (ushort)m.LParam);
                 pt = this.PointToClient(pt);

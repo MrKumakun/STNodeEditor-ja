@@ -603,6 +603,7 @@ namespace ST.Library.UI.NodeEditor
                 brush.Color = this._TitleColor;
                 g.FillRectangle(brush, this.TitleRectangle);
             }
+            /*
             if (this._LockOption) {
                 //dt.Pen.Color = this.ForeColor;
                 brush.Color = this._ForeColor;
@@ -615,8 +616,8 @@ namespace ST.Library.UI.NodeEditor
                 //g.DrawRectangle(dt.Pen, this._Left + 3, n + 0, 6, 3);
                 //g.DrawRectangle(dt.Pen, this._Left + 2, n + 3, 8, 6);
                 //g.DrawLine(dt.Pen, this._Left + 6, n + 5, this._Left + 6, n + 7);
-
             }
+            */
             if (this._LockLocation) {
                 //dt.Pen.Color = this.ForeColor;
                 brush.Color = this._ForeColor;

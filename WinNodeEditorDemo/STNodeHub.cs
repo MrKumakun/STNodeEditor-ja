@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,7 +8,7 @@ using ST.Library.UI.NodeEditor;
 namespace WinNodeEditorDemo
 {
     /// <summary>
-    /// 类库自带的STNodeHub并未被STNodeAttribute标记 无法被STNodeTreeView显示 所以需要扩展
+    /// The built-in STNodeHub in the library is not marked with STNodeAttribute, so it cannot be displayed in the STNodeTreeView. Therefore, it needs to be extended.
     /// </summary>
     [STNode("/", "Crystal_lz", "2212233137@qq.com", "st233.com", "This is single Hub")]
     public class STNodeHubSingle : STNodeHub
@@ -19,7 +19,7 @@ namespace WinNodeEditorDemo
         }
     }
     /// <summary>
-    /// 类库自带的STNodeHub并未被STNodeAttribute标记 无法被STNodeTreeView显示 所以需要扩展
+    /// The built-in STNodeHub in the library is not marked with STNodeAttribute, so it cannot be displayed in the STNodeTreeView. Therefore, it needs to be extended.
     /// </summary>
     [STNode("/", "Crystal_lz", "2212233137@qq.com", "st233.com", "This multi is Hub")]
     public class STNodeHubMulti : STNodeHub

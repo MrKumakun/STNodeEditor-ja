@@ -43,7 +43,7 @@ namespace ST.Library.UI.NodeEditor
     {
         private STNodeEditor _Owner;
         /// <summary>
-        /// 获取当前 Node 所有者
+        /// Get the current owner of the Node
         /// </summary>
         public STNodeEditor Owner {
             get { return _Owner; }
@@ -62,7 +62,7 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _IsSelected;
         /// <summary>
-        /// 获取或设置 Node 是否处于被选中状态
+        /// Get or set whether the Node is selected
         /// </summary>
         public bool IsSelected {
             get { return _IsSelected; }
@@ -77,7 +77,7 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _IsActive;
         /// <summary>
-        /// 获取 Node 是否处于活动状态
+        /// Get whether the Node is active or not
         /// </summary>
         public bool IsActive {
             get { return _IsActive; }
@@ -90,7 +90,7 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _TitleColor;
         /// <summary>
-        /// 获取或设置标题背景颜色
+        /// Get or set the background color of the title of the node
         /// </summary>
         public Color TitleColor {
             get { return _TitleColor; }
@@ -102,7 +102,7 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _MarkColor;
         /// <summary>
-        /// 获取或设置标记信息背景颜色
+        /// Get or set the background color of the tag information
         /// </summary>
         public Color MarkColor {
             get { return _MarkColor; }
@@ -114,7 +114,7 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _ForeColor = Color.White;
         /// <summary>
-        /// 获取或设置当前 Node 前景色
+        /// Get or set the foreground color of the current Node
         /// </summary>
         public Color ForeColor {
             get { return _ForeColor; }
@@ -126,7 +126,7 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _BackColor;
         /// <summary>
-        /// 获取或设置当前 Node 背景色
+        /// Get or set the background color of the current node
         /// </summary>
         public Color BackColor {
             get { return _BackColor; }

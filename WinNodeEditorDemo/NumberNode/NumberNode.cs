@@ -9,7 +9,7 @@ using System.Drawing;
 namespace WinNodeEditorDemo.NumberNode
 {
     /// <summary>
-    /// Number节点基类 用于确定节点风格 标题颜色 以及 数据类型颜色
+    /// Base class for Number nodes, used to determine node style, title color, and data type color.
     /// </summary>
     public abstract class NumberNode : STNode
     {

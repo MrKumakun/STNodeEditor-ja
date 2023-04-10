@@ -9,7 +9,7 @@ using System.Drawing;
 namespace WinNodeEditorDemo.NumberNode
 {
     /// <summary>
-    /// 此节点通过Number属性提供一个整数的输入
+    /// This node provides an integer input through the Number property
     /// </summary>
     [STNode("/Number","Crystal_lz","2212233137@qq.com","st233.com","Number input node")]
     public class NumberInputNode : NumberNode
@@ -20,12 +20,12 @@ namespace WinNodeEditorDemo.NumberNode
             get { return _Number; }
             set { 
                 _Number = value;
-                m_op_number.TransferData(value); //将数据向下传递
+                m_op_number.TransferData(value); //Pass data down.
                 this.Invalidate();
             }
         }
 
-        private STNodeOption m_op_number;       //输出选项
+        private STNodeOption m_op_number;       //Output options
         private StringFormat m_sf = new StringFormat();
 
         protected override void OnCreate() {
@@ -38,12 +38,12 @@ namespace WinNodeEditorDemo.NumberNode
             m_sf.Alignment = StringAlignment.Far;
         }
         /// <summary>
-        /// 当绘制选项文本时候 将数字绘制 因为STNodeOption.Text被protected修饰 STNode无法进行设置
-        /// 因为作者并不建议对已经添加在STNode上的选项进行修改 尤其是在AutoSize被设置的情况下
-        /// 若有需求 应当采用其他方式 比如:重绘 或者添加STNodeControl来显示变化的文本信息
+        /// When drawing option text, draw numbers because STNodeOption.Text is protected and cannot be set on STNode.
+        /// Because the author does not recommend modifying options that have already been added to STNode, especially when AutoSize is set.
+        /// If necessary, other methods should be used, such as redraw or add STNodeControl to display changing text information.
         /// </summary>
-        /// <param name="dt">绘制工具</param>
-        /// <param name="op">需要绘制的选项</param>
+        /// <param name="dt">DrawingTools</param>
+        /// <param name="op">The option that needs to be drawn.</param>
         protected override void OnDrawOptionText(DrawingTools dt, STNodeOption op) {
             base.OnDrawOptionText(dt, op);
             dt.Graphics.DrawString(this._Number.ToString(), this.Font, Brushes.White, op.TextRectangle, m_sf);

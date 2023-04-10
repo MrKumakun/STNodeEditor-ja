@@ -10,7 +10,7 @@ using ST.Library.UI.NodeEditor;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅演示 作为MixRGB节点的颜色选择按钮
+    /// This class is only a demonstration. It serves as the color picker button for the MixRGB node
     /// </summary>
     public class STNodeColorButton : STNodeControl
     {

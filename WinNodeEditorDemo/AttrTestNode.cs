@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,29 +9,31 @@ using System.Windows.Forms;
 
 namespace WinNodeEditorDemo
 {
-    [STNode("/", "Crystal_lz", "2212233137@qq.com", "www.st233.com", "关于此节点的描述信息\r\n此类为\r\nSTNodeAttribute\r\nSTNodePropertyAttribute\r\n效果演示类")]
+    // STNodeAttribute is used to add metadata to the node class
+    [STNode("/", "Crystal_lz", "2212233137@qq.com", "www.st233.com", "Description for this node\r\nThis class is\r\nSTNodeAttribute\r\nSTNodePropertyAttribute\r\nDemo class")]
     public class AttrTestNode : STNode
     {
-        //因为属性编辑器默认并不支持Color类型数据 所以这里重写一个描述器并指定
-        [STNodeProperty("颜色", "颜色信息", DescriptorType = typeof(DescriptorForColor))]
+        // We need to specify a descriptor for Color property 
+        // since the default property editor doesn't support Color data type
+        [STNodeProperty("Color", "Color information", DescriptorType = typeof(DescriptorForColor))]
         public Color Color { get; set; }
 
-        [STNodeProperty("整型数组", "整型数组测试")]
+        [STNodeProperty("Integer Array", "Test for integer array")]
         public int[] IntArr { get; set; }
 
-        [STNodeProperty("布尔", "布尔类型测试")]
+        [STNodeProperty("Boolean", "Test for boolean type")]
         public bool Bool { get; set; }
 
-        [STNodeProperty("字符串", "字符串类型测试")]
+        [STNodeProperty("String", "Test for string type")]
         public string String { get; set; }
 
-        [STNodeProperty("整型", "整型测试")]
+        [STNodeProperty("Integer", "Test for integer type")]
         public int Int { get; set; }
 
-        [STNodeProperty("浮点数", "浮点数类型测试")]
+        [STNodeProperty("Float", "Test for float type")]
         public float Float { get; set; }
 
-        [STNodeProperty("枚举值", "枚举类型测试 -> FormBorderStyle")]
+        [STNodeProperty("Enum Value", "Test for enum type -> FormBorderStyle")]
         public FormBorderStyle STYLE { get; set; }
 
         public AttrTestNode() {
@@ -43,11 +45,11 @@ namespace WinNodeEditorDemo
             this.TitleColor = Color.FromArgb(200, Color.Goldenrod);
         }
         /// <summary>
-        /// 此方法为魔术方法(Magic function)
-        /// 若存在 static void ShowHelpInfo(string) 且此类被STNodeAttribute标记
-        /// 则此方法将作为属性编辑器上 查看帮助 功能
+        /// This is a magic function. If a static method named ShowHelpInfo(string) 
+        /// exists in the class and this class is marked with STNodeAttribute, 
+        /// this method will be used as the help function in the property editor.
         /// </summary>
-        /// <param name="strFileName">此类所在的模块所在的文件路径</param>
+        /// <param name="strFileName">The file path of the module where this class is located.</param>
         public static void ShowHelpInfo(string strFileName) {
             MessageBox.Show("this is -> ShowHelpInfo(string);\r\n" + strFileName);
         }
@@ -58,24 +60,30 @@ namespace WinNodeEditorDemo
             this.Owner.SetTypeColor(typeof(string), Color.Goldenrod);
         }
     }
-    /// <summary>
-    /// 因为属性编辑器默认并不支持Color类型数据 所以这里重写一个描述器
-    /// </summary>
+
+    // Since the default property editor doesn't support Color data type, 
+    // we need to create a custom descriptor for it.
     public class DescriptorForColor : STNodePropertyDescriptor
     {
-        private Rectangle m_rect;//此区域用作 属性窗口上绘制颜色预览
-        //当此属性在属性窗口中被确定位置时候发生
-        protected override void OnSetItemLocation() {
+        private Rectangle m_rect; // This area is used to draw the color preview on the property window.
+
+        // Called when the property window is initialized.
+        protected override void OnSetItemLocation()
+        {
             base.OnSetItemLocation();
             Rectangle rect = base.RectangleR;
             m_rect = new Rectangle(rect.Right - 25, rect.Top + 5, 19, 12);
         }
-        //将属性值转换为字符串 属性窗口值绘制时将采用此字符串
-        protected override string GetStringFromValue() {
+
+        // Convert the property value to a string to display on the property window.
+        protected override string GetStringFromValue()
+        {
             Color clr = (Color)this.GetValue(null);
             return clr.A + "," + clr.R + "," + clr.G + "," + clr.B;
         }
-        //将属性窗口中输入的字符串转化为Color属性 当属性窗口中用户确认输入时调用
+
+        // This code converts the string input from the property window into a Color property.
+        // It is called when the user confirms their input in the property window.
         protected override object GetValueFromString(string strText) {
             string[] strClr = strText.Split(',');
             return Color.FromArgb(
@@ -84,16 +92,16 @@ namespace WinNodeEditorDemo
                 int.Parse(strClr[2]),   //G
                 int.Parse(strClr[3]));  //B
         }
-        //绘制属性窗口值区域时候调用
+        // This method is called when the value area of the property window needs to be drawn.
         protected override void OnDrawValueRectangle(DrawingTools dt) {
-            base.OnDrawValueRectangle(dt);//先采用默认的绘制 并再绘制颜色预览
+            base.OnDrawValueRectangle(dt);                    // Draw using default behavior first, and then draw the color preview.
             dt.SolidBrush.Color = (Color)this.GetValue(null);
-            dt.Graphics.FillRectangle(dt.SolidBrush, m_rect);//填充颜色
-            dt.Graphics.DrawRectangle(Pens.Black, m_rect);   //绘制边框
+            dt.Graphics.FillRectangle(dt.SolidBrush, m_rect); // Fill with the color.
+            dt.Graphics.DrawRectangle(Pens.Black, m_rect);    // Draw the border.
         }
 
         protected override void OnMouseClick(MouseEventArgs e) {
-            //如果用户点击在 颜色预览区域 则弹出系统颜色对话框
+            // If the user clicks on the color preview area, a system color dialog is displayed.
             if (m_rect.Contains(e.Location)) {
                 ColorDialog cd = new ColorDialog();
                 if (cd.ShowDialog() != DialogResult.OK) return;
@@ -101,7 +109,7 @@ namespace WinNodeEditorDemo
                 this.Invalidate();
                 return;
             }
-            //否则其他区域将采用默认处理方式 弹出字符串输入框
+            // Otherwise, the default behavior is used to display a string input box.
             base.OnMouseClick(e);
         }
     }

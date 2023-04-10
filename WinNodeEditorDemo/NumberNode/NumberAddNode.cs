@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,9 +31,10 @@ namespace WinNodeEditorDemo.NumberNode
             m_in_num1.DataTransfer += new STNodeOptionEventHandler(m_in_num_DataTransfer);
             m_in_num2.DataTransfer += new STNodeOptionEventHandler(m_in_num_DataTransfer);
         }
-        //当有数据传入时
+
+        // Called when data is transferred to an input option
         void m_in_num_DataTransfer(object sender, STNodeOptionEventArgs e) {
-            //判断连线是否是连接状态(建立连线 断开连线 都会触发该事件)
+            // Check if the connection is established (connection established or broken will trigger this event)
             if (e.Status == ConnectionStatus.Connected) {
                 if (sender == m_in_num1) {
                     if (e.TargetOption.Data != null) m_nNum1 = (int)e.TargetOption.Data;//TargetOption为触发此事件的Option
@@ -43,17 +44,17 @@ namespace WinNodeEditorDemo.NumberNode
             } else {
                 if (sender == m_in_num1) m_nNum1 = 0; else m_nNum2 = 0;
             }
-            //向输出选项上的所有连线传输数据 输出选项上的所有连线都会触发 DataTransfer 事件
-            m_out_num.TransferData(m_nNum1 + m_nNum2); //m_out_num.Data 将被自动设置
+            // Transfer the sum of the two numbers to all output options (which will trigger DataTransfer event for all connected options)
+            m_out_num.TransferData(m_nNum1 + m_nNum2); // m_out_num.Data will be automatically set
             this.Invalidate();
         }
         /// <summary>
-        /// 当绘制选项文本时候 将数字绘制 因为STNodeOption.Text被protected修饰 STNode无法进行设置
-        /// 因为作者并不建议对已经添加在STNode上的选项进行修改 尤其是在AutoSize被设置的情况下
-        /// 若有需求 应当采用其他方式 比如:重绘 或者添加STNodeControl来显示变化的文本信息
+        /// When drawing the option text, draw the numbers because STNodeOption.Text is protected and cannot be set on STNode.
+        /// Because the author does not recommend modifying options that have already been added to STNode, especially when AutoSize is set.
+        /// If there is a need, other methods should be used, such as redrawing or adding STNodeControl to display changing text information.
         /// </summary>
-        /// <param name="dt">绘制工具</param>
-        /// <param name="op">需要绘制的选项</param>
+        /// <param name="dt">Drawing tool</param>
+        /// <param name="op">The option that needs to be drawn</param>
         protected override void OnDrawOptionText(DrawingTools dt, STNodeOption op) {
             base.OnDrawOptionText(dt, op);
             string strText = "";

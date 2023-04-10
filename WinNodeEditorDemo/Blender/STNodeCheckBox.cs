@@ -9,7 +9,7 @@ using ST.Library.UI.NodeEditor;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅演示 作为MixRGB节点的复选框控件
+    /// This class is only for demonstration purposes, as a checkbox control for the MixRGB node
     /// </summary>
     public class STNodeCheckBox : STNodeControl
     {

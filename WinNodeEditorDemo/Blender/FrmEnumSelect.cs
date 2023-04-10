@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅演示 作为MixRGB节点的下拉选择框弹出菜单
+    /// This class is only for demonstration purposes, serving as a dropdown menu for the MixRGB node.
     /// </summary>
     public class FrmEnumSelect : Form
     {

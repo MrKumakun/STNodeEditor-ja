@@ -9,30 +9,30 @@ using System.Drawing;
 namespace WinNodeEditorDemo.ImageNode
 {
     /// <summary>
-    /// 图片节点基类 用于确定节点风格 标题颜色 以及 数据类型颜色
+    /// Base class for image nodes used to determine node style, title color, and data type color.
     /// </summary>
     public abstract class ImageBaseNode : STNode
     {
         /// <summary>
-        /// 需要作为显示绘制的图片
+        /// Image to be drawn as display.
         /// </summary>
         protected Image m_img_draw;
         /// <summary>
-        /// 输出节点
+        /// Output node
         /// </summary>
         protected STNodeOption m_op_img_out;
 
         protected override void OnCreate() {
             base.OnCreate();
             m_op_img_out = this.OutputOptions.Add("", typeof(Image), false);
-            this.AutoSize = false;          //此节点需要定制UI 所以无需AutoSize
+            this.AutoSize = false;          //This node requires a customized UI, so there is no need for AutoSize.
             //this.Size = new Size(320,240);
-            this.Width = 160;               //手动设置节点大小
+            this.Width = 160;               //Manually set the size of the node
             this.Height = 120;
             this.TitleColor = Color.FromArgb(200, Color.DarkCyan);
         }
 
-        protected override void OnOwnerChanged() {  //向编辑器提交数据类型颜色
+        protected override void OnOwnerChanged() {  //Submit data type color to the editor
             base.OnOwnerChanged();
             if (this.Owner == null) return;
             this.Owner.SetTypeColor(typeof(Image), Color.DarkCyan);

@@ -12,10 +12,10 @@ namespace WinNodeEditorDemo.ImageNode
     [STNode("/Image")]
     public class ImageChannelNode : ImageBaseNode
     {
-        private STNodeOption m_op_img_in;   //输入的节点
-        private STNodeOption m_op_img_r;    //R图 输出节点
-        private STNodeOption m_op_img_g;    //G图 输出节点
-        private STNodeOption m_op_img_b;    //B图 输出节点
+        private STNodeOption m_op_img_in;   //Input Node
+        private STNodeOption m_op_img_r;    //Red Output
+        private STNodeOption m_op_img_g;    //Green Output
+        private STNodeOption m_op_img_b;    //Blue Output
 
         protected override void OnCreate() {
             base.OnCreate();
@@ -25,20 +25,20 @@ namespace WinNodeEditorDemo.ImageNode
             m_op_img_r = this.OutputOptions.Add("R", typeof(Image), false);
             m_op_img_g = this.OutputOptions.Add("G", typeof(Image), false);
             m_op_img_b = this.OutputOptions.Add("B", typeof(Image), false);
-            //当输入节点有数据输入时候
+            //When there is data input to the input node
             m_op_img_in.DataTransfer += new STNodeOptionEventHandler(m_op_img_in_DataTransfer);
         }
 
         void m_op_img_in_DataTransfer(object sender, STNodeOptionEventArgs e) {
-            //如果当前不是连接状态 或者 接受到的数据为空
+            //If the current state is not connected or the received data is empty
             if (e.Status != ConnectionStatus.Connected || e.TargetOption.Data == null) {
-                m_op_img_out.TransferData(null);    //向所有输出节点输出空数据
+                m_op_img_out.TransferData(null);    //Forward empty data to all output nodes
                 m_op_img_r.TransferData(null);
                 m_op_img_g.TransferData(null);
                 m_op_img_b.TransferData(null);
-                m_img_draw = null;                  //需要绘制显示的图片置为空
+                m_img_draw = null;                  //Set the image to be displayed for drawing to null
             } else {
-                Bitmap bmp = (Bitmap)e.TargetOption.Data;           //否则计算图片的RGB图像
+                Bitmap bmp = (Bitmap)e.TargetOption.Data;           //Otherwise, calculate the RGB image of the picture
                 Bitmap bmp_r = new Bitmap(bmp.Width, bmp.Height);
                 Bitmap bmp_g = new Bitmap(bmp.Width, bmp.Height);
                 Bitmap bmp_b = new Bitmap(bmp.Width, bmp.Height);
@@ -68,11 +68,11 @@ namespace WinNodeEditorDemo.ImageNode
                 bmp_r.UnlockBits(bmpData_r);
                 bmp_g.UnlockBits(bmpData_g);
                 bmp_b.UnlockBits(bmpData_b);
-                m_op_img_out.TransferData(bmp); //out选项 输出原图
-                m_op_img_r.TransferData(bmp_r); //R选项输出R图
+                m_op_img_out.TransferData(bmp); //The "out" option outputs the original image
+                m_op_img_r.TransferData(bmp_r); //R option outputs R image
                 m_op_img_g.TransferData(bmp_g);
                 m_op_img_b.TransferData(bmp_b);
-                m_img_draw = bmp;               //需要绘制显示的图片
+                m_img_draw = bmp;               //Image to be displayed needs to be drawn
             }
         }
 

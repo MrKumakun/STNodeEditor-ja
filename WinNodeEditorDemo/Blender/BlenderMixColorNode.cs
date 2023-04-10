@@ -9,7 +9,7 @@ using System.Drawing;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅仅是演示 并不包含颜色混合功能
+    /// This class is for demonstration only and does not include color blending functionality
     /// </summary>
     [STNode("/Blender/", "Crystal_lz", "2212233137@qq.com", "st233.com", "this is blender mixrgb node")]
     public class BlenderMixColorNode : STNode
@@ -20,7 +20,7 @@ namespace WinNodeEditorDemo.Blender
             get { return _MixType; }
             set { 
                 _MixType = value;
-                m_ctrl_select.Enum = value; //当属性被赋值后 对应控件状态值也应当被修改
+                m_ctrl_select.Enum = value; //After the property is assigned a value, the corresponding control state value should also be modified
             }
         }
 
@@ -42,7 +42,7 @@ namespace WinNodeEditorDemo.Blender
             }
         }
 
-        private Color _Color1 = Color.LightGray;//默认的DescriptorType不支持颜色的显示 需要扩展
+        private Color _Color1 = Color.LightGray;//The default DescriptorType does not support displaying colors and needs to be extended
         [STNodeProperty("Color1", "This is color1", DescriptorType = typeof(WinNodeEditorDemo.DescriptorForColor))]
         public Color Color1 {
             get { return _Color1; }
@@ -65,7 +65,7 @@ namespace WinNodeEditorDemo.Blender
             Subtract
         }
 
-        private STNodeSelectEnumBox m_ctrl_select;  //自定义控件
+        private STNodeSelectEnumBox m_ctrl_select;  //Custom control
         private STNodeProgress m_ctrl_progess;
         private STNodeCheckBox m_ctrl_checkbox;
         private STNodeColorButton m_ctrl_btn_1;
@@ -80,14 +80,14 @@ namespace WinNodeEditorDemo.Blender
 
             this.OutputOptions.Add("Color", typeof(Color), true);
 
-            this.InputOptions.Add(STNodeOption.Empty);  //空白节点 仅站位 不参与绘制与事件触发
+            this.InputOptions.Add(STNodeOption.Empty);  //Blank node, only for positioning, no drawing or event triggering involved
             this.InputOptions.Add(STNodeOption.Empty);
             this.InputOptions.Add(STNodeOption.Empty);
             this.InputOptions.Add("", typeof(float), true);
             this.InputOptions.Add("Color1", typeof(Color), true);
             this.InputOptions.Add("Color2", typeof(Color), true);
 
-            m_ctrl_progess = new STNodeProgress();      //创建控件并添加到节点中
+            m_ctrl_progess = new STNodeProgress();      //Create the control and add it to the node
             m_ctrl_progess.Text = "Fac";
             m_ctrl_progess.DisplayRectangle = new Rectangle(10, 61, 120, 18);
             m_ctrl_progess.ValueChanged += (s, e) => this._Fac = m_ctrl_progess.Value;
@@ -120,7 +120,7 @@ namespace WinNodeEditorDemo.Blender
             this.Controls.Add(m_ctrl_select);
         }
 
-        protected override void OnOwnerChanged() {  //当控件被添加时候 向编辑器提交自己的数据类型希望显示的颜色
+        protected override void OnOwnerChanged() {  //When the control is added, submit its own data type color to the editor for display
             base.OnOwnerChanged();
             if (this.Owner == null) return;
             this.Owner.SetTypeColor(typeof(float), Color.Gray);

@@ -9,7 +9,7 @@ using ST.Library.UI.NodeEditor;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅演示 作为MixRGB节点的下拉框控件
+    /// This class is only for demonstration as a dropdown control for the MixRGB node
     /// </summary>
     public class STNodeSelectEnumBox : STNodeControl
     {

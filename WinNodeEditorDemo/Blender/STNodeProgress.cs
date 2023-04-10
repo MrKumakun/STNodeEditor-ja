@@ -9,7 +9,7 @@ using System.Drawing;
 namespace WinNodeEditorDemo.Blender
 {
     /// <summary>
-    /// 此类仅演示 作为MixRGB节点的进度条控件
+    /// This class is only for demonstration purposes and serves as the progress bar control for the MixRGB node
     /// </summary>
     public class STNodeProgress : STNodeControl
     {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +9,9 @@ using System.Drawing;
 namespace WinNodeEditorDemo
 {
     /// <summary>
-    /// 此节点仅演示UI自定义以及控件 并不包含功能
+    /// This node only demonstrates UI customization and controls, it does not include functionality
     /// </summary>
-    [STNode("/", "DebugST", "2212233137@qq.com", "st233.com", "此节点仅演示UI自定义以及控件,并不包含功能.")]
+    [STNode("/", "DebugST", "2212233137@qq.com", "st233.com", "This node only demonstrates UI customization and controls, it does not include functionality.")]
     public class CalcNode : STNode
     {
         private StringFormat m_f;
@@ -21,11 +21,11 @@ namespace WinNodeEditorDemo
             m_sf = new StringFormat();
             m_sf.LineAlignment = StringAlignment.Center;
             this.Title = "Calculator";
-            this.AutoSize = false;          //注意需要先设置AutoSize=false 才能够进行大小设置
+            this.AutoSize = false;  //Note that we need to set AutoSize to false first to be able to set the size
             this.Size = new Size(218, 308);
 
             var ctrl = new STNodeControl();
-            ctrl.Text = "";                 //此控件为显示屏幕
+            ctrl.Text = ""; //This control is for displaying the screen
             ctrl.Location = new Point(13, 31);
             ctrl.Size = new Size(190, 50);
             this.Controls.Add(ctrl);
@@ -37,7 +37,7 @@ namespace WinNodeEditorDemo
                 g.DrawString("0", ctrl.Font, Brushes.White, c.ClientRectangle, m_sf);
             };
 
-            string[] strs = { //按钮文本
+            string[] strs = { //Button texts
                                 "MC", "MR", "MS", "M+",
                                 "M-", "←",  "CE", "C", "+", "√", 
                                 "7",  "8",  "9",  "/", "%",

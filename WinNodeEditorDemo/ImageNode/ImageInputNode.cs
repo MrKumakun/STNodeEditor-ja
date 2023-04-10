@@ -13,12 +13,12 @@ namespace WinNodeEditorDemo.ImageNode
     [STNode("Image", "Crystal_lz", "2212233137@qq.com", "st233.com", "Image Node")]
     public class ImageInputNode : ImageBaseNode
     {
-        private string _FileName;//默认的DescriptorType不支持文件路径的选择 所以需要扩展
+        private string _FileName;//The default DescriptorType doesn't support selecting a file path, so an extension is needed
         [STNodeProperty("InputImage", "Click to select a image", DescriptorType = typeof(OpenFileDescriptor))]
         public string FileName {
             get { return _FileName; }
             set {
-                Image img = null;                       //当文件名被设置时 加载图片并 向输出节点输出
+                Image img = null;                       //When the file name is set, load the image and output it to the output node
                 if (!string.IsNullOrEmpty(value)) {
                     img = Image.FromFile(value);
                 }
@@ -44,11 +44,11 @@ namespace WinNodeEditorDemo.ImageNode
         }
     }
     /// <summary>
-    /// 对默认Descriptor进行扩展 使得支持文件路径选择
+    /// Extend the default Descriptor to support file path selection
     /// </summary>
     public class OpenFileDescriptor : STNodePropertyDescriptor
     {
-        private Rectangle m_rect_open;  //需要绘制"打开"按钮的区域
+        private Rectangle m_rect_open;  //Area to draw the "Open" button is required
         private StringFormat m_sf;
 
         public OpenFileDescriptor() {
@@ -57,8 +57,8 @@ namespace WinNodeEditorDemo.ImageNode
             m_sf.LineAlignment = StringAlignment.Center;
         }
 
-        protected override void OnSetItemLocation() {   //当在STNodePropertyGrid上确定此属性需要显示的区域时候
-            base.OnSetItemLocation();                   //计算出"打开"按钮需要绘制的区域
+        protected override void OnSetItemLocation() {   //When determining the area where this property needs to be displayed on the STNodePropertyGrid
+            base.OnSetItemLocation();                   //Calculate the area to be drawn for the "open" button
             m_rect_open = new Rectangle(
                 this.RectangleR.Right - 20,
                 this.RectangleR.Top,
@@ -67,16 +67,16 @@ namespace WinNodeEditorDemo.ImageNode
         }
 
         protected override void OnMouseClick(System.Windows.Forms.MouseEventArgs e) {
-            if (m_rect_open.Contains(e.Location)) {     //点击在"打开"区域 则弹出文件选择框
+            if (m_rect_open.Contains(e.Location)) {     //Clicking on the "Open" area will bring up a file selection dialog
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Filter = "*.jpg|*.jpg|*.png|*.png";
                 if (ofd.ShowDialog() != DialogResult.OK) return;
                 this.SetValue(ofd.FileName);
-            } else base.OnMouseClick(e);                //否则默认处理方式 弹出文本输入框
+            } else base.OnMouseClick(e);                //Otherwise, the default handling is to pop up a text input box
         }
 
         protected override void OnDrawValueRectangle(DrawingTools dt) {
-            base.OnDrawValueRectangle(dt);              //在STNodePropertyGrid绘制此属性区域时候将"打开"按钮绘制上去
+            base.OnDrawValueRectangle(dt);              //When drawing the property area of this property in STNodePropertyGrid, draw the "open" button on it.
             dt.Graphics.FillRectangle(Brushes.Gray, m_rect_open);
             dt.Graphics.DrawString("+", this.Control.Font, Brushes.White, m_rect_open, m_sf);
         }

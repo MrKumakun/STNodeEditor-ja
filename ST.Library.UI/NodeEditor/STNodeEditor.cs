@@ -791,6 +791,7 @@ namespace ST.Library.UI.NodeEditor
                         m_rect_select.Width = Math.Abs(m_pt_in_canvas.X - m_pt_down_in_canvas.X);
                         m_rect_select.Height = Math.Abs(m_pt_in_canvas.Y - m_pt_down_in_canvas.Y);
                         foreach (STNode n in this._Nodes) {
+                            if (n == null) continue;
                             n.SetSelected(m_rect_select.IntersectsWith(n.Rectangle), false);
                         }
                         this.Invalidate();
@@ -1455,6 +1456,9 @@ namespace ST.Library.UI.NodeEditor
             m_mi.XMatched = m_mi.YMatched = false;
             m_lst_magnet_mx.Clear();
             m_lst_magnet_my.Clear();
+
+            if (node == null) return m_mi;
+
             m_lst_magnet_mx.Add(node.Left + node.Width / 2);
             m_lst_magnet_mx.Add(node.Left);
             m_lst_magnet_mx.Add(node.Left + node.Width);

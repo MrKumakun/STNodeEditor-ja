@@ -10,13 +10,13 @@ using System.ComponentModel;
 
 namespace ST.Library.UI.NodeEditor
 {
-    public class STNodeEditorPannel : Control
+    public class STNodeEditorPanel : Control
     {
         private bool _LeftLayout = true;
         /// <summary>
-        /// 获取或设置是否是左边布局
+        /// Get or set whether it is the left layout.
         /// </summary>
-        [Description("获取或设置是否是左边布局"), DefaultValue(true)]
+        [Description("Get or set whether it is the left layout."), DefaultValue(true)]
         public bool LeftLayout {
             get { return _LeftLayout; }
             set {
@@ -29,9 +29,9 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _SplitLineColor = Color.Black;
         /// <summary>
-        /// 获取或这是分割线颜色
+        /// Get or this is the color of the dividing line.
         /// </summary>
-        [Description("获取或这是分割线颜色"), DefaultValue(typeof(Color), "Black")]
+        [Description("Get or this is the color of the dividing line."), DefaultValue(typeof(Color), "Black")]
         public Color SplitLineColor {
             get { return _SplitLineColor; }
             set { _SplitLineColor = value; }
@@ -39,9 +39,9 @@ namespace ST.Library.UI.NodeEditor
 
         private Color _HandleLineColor = Color.Gray;
         /// <summary>
-        /// 获取或设置分割线手柄颜色
+        /// Get or set the color of the dividing line handle.
         /// </summary>
-        [Description("获取或设置分割线手柄颜色"), DefaultValue(typeof(Color), "Gray")]
+        [Description("Get or set the color of the dividing line handle."), DefaultValue(typeof(Color), "Gray")]
         public Color HandleLineColor {
             get { return _HandleLineColor; }
             set { _HandleLineColor = value; }
@@ -49,9 +49,9 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _ShowScale = true;
         /// <summary>
-        /// 获取或设置编辑器缩放时候显示比例
+        /// Get or set the display scale when the editor is zoomed.
         /// </summary>
-        [Description("获取或设置编辑器缩放时候显示比例"), DefaultValue(true)]
+        [Description("Get or set the display scale when the editor is zoomed."), DefaultValue(true)]
         public bool ShowScale {
             get { return _ShowScale; }
             set { _ShowScale = value; }
@@ -59,9 +59,9 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _ShowConnectionStatus = true;
         /// <summary>
-        /// 获取或设置节点连线时候是否显示状态
+        /// Get or set whether the status is displayed when the node is connected.
         /// </summary>
-        [Description("获取或设置节点连线时候是否显示状态"), DefaultValue(true)]
+        [Description("Get or set whether the status is displayed when the node is connected."), DefaultValue(true)]
         public bool ShowConnectionStatus {
             get { return _ShowConnectionStatus; }
             set { _ShowConnectionStatus = value; }
@@ -69,9 +69,9 @@ namespace ST.Library.UI.NodeEditor
 
         private int _X;
         /// <summary>
-        /// 获取或设置分割线水平宽度
+        /// Get or set the horizontal width of the dividing line.
         /// </summary>
-        [Description("获取或设置分割线水平宽度"), DefaultValue(201)]
+        [Description("Get or set the horizontal width of the dividing line."), DefaultValue(201)]
         public int X {
             get { return _X; }
             set {
@@ -85,9 +85,9 @@ namespace ST.Library.UI.NodeEditor
 
         private int _Y;
         /// <summary>
-        /// 获取或设置分割线垂直高度
+        /// Get or set the vertical height of the dividing line.
         /// </summary>
-        [Description("获取或设置分割线垂直高度")]
+        [Description("Get or set the vertical height of the dividing line.")]
         public int Y {
             get { return _Y; }
             set {
@@ -99,23 +99,23 @@ namespace ST.Library.UI.NodeEditor
             }
         }
         /// <summary>
-        /// 获取面板中的STNodeEditor
+        /// Get the STNodeEditor in the panel.
         /// </summary>
-        [Description("获取面板中的STNodeEditor"), Browsable(false)]
+        [Description("Get the STNodeEditor in the panel."), Browsable(false)]
         public STNodeEditor Editor {
             get { return m_editor; }
         }
         /// <summary>
-        /// 获取面板中的STNodeTreeView
+        /// Get the STNodeTreeView in the panel.
         /// </summary>
-        [Description("获取面板中的STNodeTreeView"), Browsable(false)]
+        [Description("Get the STNodeTreeView in the panel."), Browsable(false)]
         public STNodeTreeView TreeView {
             get { return m_tree; }
         }
         /// <summary>
-        /// 获取面板中的STNodePropertyGrid
+        /// Get the STNodePropertyGrid in the panel.
         /// </summary>
-        [Description("获取面板中的STNodePropertyGrid"), Browsable(false)]
+        [Description("Get the STNodePropertyGrid in the panel."), Browsable(false)]
         public STNodePropertyGrid PropertyGrid {
             get { return m_grid; }
         }
@@ -145,7 +145,7 @@ namespace ST.Library.UI.NodeEditor
         [DllImport("user32.dll")]
         private static extern bool MoveWindow(IntPtr hWnd, int x, int y, int w, int h, bool bRedraw);
 
-        public STNodeEditorPannel() {
+        public STNodeEditorPanel() {
             this.SetStyle(ControlStyles.UserPaint, true);
             this.SetStyle(ControlStyles.ResizeRedraw, true);
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -177,7 +177,7 @@ namespace ST.Library.UI.NodeEditor
             }
 
             m_editor.ActiveChanged += (s, e) => m_grid.SetNode(m_editor.ActiveNode);
-            m_editor.CanvasScaled += (s, e) => {
+            m_editor.CanvasZoomed += (s, e) => {
                 if (this._ShowScale)
                     m_editor.ShowAlert(m_editor.CanvasScale.ToString("F2"), Color.White, Color.FromArgb(127, 255, 255, 0));
             };
@@ -233,19 +233,19 @@ namespace ST.Library.UI.NodeEditor
             if (this._LeftLayout) {
                 //m_tree.Location = Point.Empty;
                 //m_tree.Size = new Size(m_sx - 1, m_sy - 1);
-                STNodeEditorPannel.MoveWindow(m_tree.Handle, 0, 0, this._X - 1, this._Y - 1, false);
+                STNodeEditorPanel.MoveWindow(m_tree.Handle, 0, 0, this._X - 1, this._Y - 1, false);
 
                 //m_grid.Location = new Point(0, m_sy + 2);
                 //m_grid.Size = new Size(m_sx - 1, this.Height - m_sy - 2);
-                STNodeEditorPannel.MoveWindow(m_grid.Handle, 0, this._Y + 2, this._X - 1, this.Height - this._Y - 2, false);
+                STNodeEditorPanel.MoveWindow(m_grid.Handle, 0, this._Y + 2, this._X - 1, this.Height - this._Y - 2, false);
 
                 //m_editor.Location = new Point(m_sx + 2, 0);
                 //m_editor.Size = new Size(this.Width - m_sx - 2, this.Height);
-                STNodeEditorPannel.MoveWindow(m_editor.Handle, this._X + 2, 0, this.Width - this._X - 2, this.Height, false);
+                STNodeEditorPanel.MoveWindow(m_editor.Handle, this._X + 2, 0, this.Width - this._X - 2, this.Height, false);
             } else {
-                STNodeEditorPannel.MoveWindow(m_editor.Handle, 0, 0, this._X - 1, this.Height, false);
-                STNodeEditorPannel.MoveWindow(m_tree.Handle, this._X + 2, 0, this.Width - this._X - 2, this._Y - 1, false);
-                STNodeEditorPannel.MoveWindow(m_grid.Handle, this._X + 2, this._Y + 2, this.Width - this._X - 2, this.Height - this._Y - 2, false);
+                STNodeEditorPanel.MoveWindow(m_editor.Handle, 0, 0, this._X - 1, this.Height, false);
+                STNodeEditorPanel.MoveWindow(m_tree.Handle, this._X + 2, 0, this.Width - this._X - 2, this._Y - 1, false);
+                STNodeEditorPanel.MoveWindow(m_grid.Handle, this._X + 2, this._Y + 2, this.Width - this._X - 2, this.Height - this._Y - 2, false);
             }
         }
 
@@ -293,28 +293,28 @@ namespace ST.Library.UI.NodeEditor
             this.Cursor = Cursors.Arrow;
         }
         /// <summary>
-        /// 向树控件中添加一个STNode
+        /// Add an STNode to the tree control.
         /// </summary>
-        /// <param name="stNodeType">STNode类型</param>
-        /// <returns>是否添加成功</returns>
+        /// <param name="stNodeType">STNode type</param>
+        /// <returns>Is it added successfully?</returns>
         public bool AddSTNode(Type stNodeType) {
             return m_tree.AddNode(stNodeType);
         }
         /// <summary>
-        /// 从程序集中加载STNode
+        /// Load STNode from assembly.
         /// </summary>
-        /// <param name="strFileName">程序集路径</param>
-        /// <returns>添加成功个数</returns>
+        /// <param name="strFileName">Assembly path</param>
+        /// <returns>Number of successful additions</returns>
         public int LoadAssembly(string strFileName) {
             m_editor.LoadAssembly(strFileName);
             return m_tree.LoadAssembly(strFileName);
         }
         /// <summary>
-        /// 设置编辑器显示连接状态的文本
+        /// Set the editor to display the text of the connection status.
         /// </summary>
-        /// <param name="status">连接状态</param>
-        /// <param name="strText">对应显示文本</param>
-        /// <returns>旧文本</returns>
+        /// <param name="status">Connection Status</param>
+        /// <param name="strText">Corresponding display text</param>
+        /// <returns>Old text</returns>
         public string SetConnectionStatusText(ConnectionStatus status, string strText) {
             string strOld = null;
             if (m_dic_status_key.ContainsKey(status)) {

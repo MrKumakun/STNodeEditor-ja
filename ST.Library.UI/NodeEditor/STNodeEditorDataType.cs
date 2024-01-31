@@ -10,75 +10,75 @@ namespace ST.Library.UI.NodeEditor
     public enum ConnectionStatus
     {
         /// <summary>
-        /// 不存在所有者
+        /// No owner
         /// </summary>
-        [Description("不存在所有者")]
+        [Description("No owner")]
         NoOwner,
         /// <summary>
-        /// 相同的所有者
+        /// Same owner
         /// </summary>
-        [Description("相同的所有者")]
+        [Description("Same owner")]
         SameOwner,
         /// <summary>
-        /// 均为输入或者输出选项
+        /// Both are input or output options
         /// </summary>
-        [Description("均为输入或者输出选项")]
+        [Description("Both are input or output options")]
         SameInputOrOutput,
         /// <summary>
-        /// 不同的数据类型
+        /// Different data types
         /// </summary>
-        [Description("不同的数据类型")]
+        [Description("Different data types")]
         ErrorType,
         /// <summary>
-        /// 单连接节点
+        /// Single connection node
         /// </summary>
-        [Description("单连接节点")]
+        [Description("Single connection node")]
         SingleOption,
         /// <summary>
-        /// 出现环形路径
+        /// Circular path
         /// </summary>
-        [Description("出现环形路径")]
+        [Description("Circular path")]
         Loop,
         /// <summary>
-        /// 已存在的连接
+        /// Existing connection
         /// </summary>
-        [Description("已存在的连接")]
+        [Description("Existing connection")]
         Exists,
         /// <summary>
-        /// 空白选项
+        /// Empty option
         /// </summary>
-        [Description("空白选项")]
+        [Description("Empty option")]
         EmptyOption,
         /// <summary>
-        /// 已经连接
+        /// Already connected
         /// </summary>
-        [Description("已经连接")]
+        [Description("Connected")]
         Connected,
         /// <summary>
-        /// 连接被断开
+        /// Disconnected
         /// </summary>
-        [Description("连接被断开")]
-        DisConnected,
+        [Description("Disconnected")]
+        Disconnected,
         /// <summary>
-        /// 节点被锁定
+        /// Node is locked
         /// </summary>
-        [Description("节点被锁定")]
+        [Description("Node is locked")]
         Locked,
         /// <summary>
-        /// 操作被拒绝
+        /// Operation denied
         /// </summary>
-        [Description("操作被拒绝")]
+        [Description("Operation denied")]
         Reject,
         /// <summary>
-        /// 正在被连接
+        /// Connecting
         /// </summary>
-        [Description("正在被连接")]
+        [Description("Connecting")]
         Connecting,
         /// <summary>
-        /// 正在断开连接
+        /// Disconnecting
         /// </summary>
-        [Description("正在断开连接")]
-        DisConnecting
+        [Description("Disconnecting")]
+        Disconnecting
     }
 
     public enum AlertLocation
@@ -101,11 +101,11 @@ namespace ST.Library.UI.NodeEditor
         public SolidBrush SolidBrush;
     }
 
-    public enum CanvasMoveArgs      //移动画布时需要的参数 查看->MoveCanvas()
+    public enum CanvasMoveArgs      //Parameters required when moving the canvas View->MoveCanvas()
     {
-        Left = 1,                   //表示 仅移动 X 坐标
-        Top = 2,                    //表示 仅移动 Y 坐标
-        All = 4                     //表示 X Y 同时移动
+        Left = 1,                   //Means to move only the X coordinate
+        Top = 2,                    //Means to move only the Y coordinate
+        All = 4                     //Means X Y moves at the same time
     }
 
     public struct NodeFindInfo
@@ -128,7 +128,7 @@ namespace ST.Library.UI.NodeEditor
     {
         private STNodeOption _TargetOption;
         /// <summary>
-        /// 触发此事件的对应Option
+        /// The corresponding Option that triggered this event.
         /// </summary>
         public STNodeOption TargetOption {
             get { return _TargetOption; }
@@ -136,7 +136,7 @@ namespace ST.Library.UI.NodeEditor
 
         private ConnectionStatus _Status;
         /// <summary>
-        /// Option之间的连线状态
+        /// Connection status between options.
         /// </summary>
         public ConnectionStatus Status {
             get { return _Status; }
@@ -145,7 +145,7 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _IsSponsor;
         /// <summary>
-        /// 是否为此次行为的发起者
+        /// Is it the initiator of this behavior?
         /// </summary>
         public bool IsSponsor {
             get { return _IsSponsor; }
@@ -180,7 +180,7 @@ namespace ST.Library.UI.NodeEditor
 
         private STNodeOption _CurrentOption;
         /// <summary>
-        /// 主动触发事件的Option
+        /// Option that triggers the event actively.
         /// </summary>
         public STNodeOption CurrentOption {
             get { return _CurrentOption; }
@@ -188,7 +188,7 @@ namespace ST.Library.UI.NodeEditor
 
         private bool _Continue = true;
         /// <summary>
-        /// 是否继续向下操作 用于Begin(Connecting/DisConnecting)是否继续向后操作
+        /// Whether to continue downward operation Used for Begin (Connecting/Disconnecting) whether to continue backward operation.
         /// </summary>
         public bool Continue {
             get { return _Continue; }
@@ -200,4 +200,28 @@ namespace ST.Library.UI.NodeEditor
             this._CurrentOption = opCurrent;
         }
     }
+
+    public struct NodeMovement
+    {
+        public STNode Node;
+        public Point OldLocation;
+        public Point NewLocation;
+    }
+
+    public class STNodesMovedEventArgs : EventArgs
+    {
+        public STNodesMovedEventArgs(NodeMovement[] movements)
+        {
+            mMovements = movements;
+        }
+
+        public NodeMovement[] Movements
+        {
+            get { return mMovements; }
+        }
+
+        private NodeMovement[] mMovements;
+    }
+
+    public delegate void STNodesMovedEventHandler(object sender, STNodesMovedEventArgs e);
 }

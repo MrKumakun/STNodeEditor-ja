@@ -155,7 +155,7 @@ namespace ST.Library.UI.NodeEditor
             get { return _Font; }
             set {
                 if (value == _Font) return;
-                if (value == null) throw new ArgumentNullException("值不能为空");
+                if (value == null) throw new ArgumentNullException("Value cannot be empty.");
                 _Font = value;
                 this.Invalidate();
             }
@@ -172,13 +172,13 @@ namespace ST.Library.UI.NodeEditor
             }
         }
 
-        private bool _Visable = true;
+        private bool _Visible = true;
 
-        public bool Visable {
-            get { return _Visable; }
+        public bool Visible {
+            get { return _Visible; }
             set {
-                if (value == _Visable) return;
-                _Visable = value;
+                if (value == _Visible) return;
+                _Visible = value;
                 this.Invalidate();
             }
         }
@@ -308,7 +308,7 @@ namespace ST.Library.UI.NodeEditor
     public class STNodeControlPaintEventArgs : EventArgs
     {
         /// <summary>
-        /// 绘制工具
+        /// Drawing tools
         /// </summary>
         public DrawingTools DrawingTools { get; private set; }
 

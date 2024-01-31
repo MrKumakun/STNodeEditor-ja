@@ -9,7 +9,7 @@ namespace ST.Library.UI.NodeEditor
     public class STNodeControlCollection: IList, ICollection, IEnumerable
     {
         /*
-         * 为了确保安全在STNode中 仅继承者才能够访问集合
+         * To ensure safety, only the successor can access the collection in STNode.
          */
         private int _Count;
         public int Count { get { return _Count; } }
@@ -17,13 +17,13 @@ namespace ST.Library.UI.NodeEditor
         private STNode m_owner;
 
         internal STNodeControlCollection(STNode owner) {
-            if (owner == null) throw new ArgumentNullException("所有者不能为空");
+            if (owner == null) throw new ArgumentNullException("Owner cannot be empty.");
             m_owner = owner;
             m_controls = new STNodeControl[4];
         }
 
         public int Add(STNodeControl control) {
-            if (control == null) throw new ArgumentNullException("添加对象不能为空");
+            if (control == null) throw new ArgumentNullException("Add object cannot be empty.");
             this.EnsureSpace(1);
             int nIndex = this.IndexOf(control);
             if (-1 == nIndex) {
@@ -36,10 +36,10 @@ namespace ST.Library.UI.NodeEditor
         }
 
         public void AddRange(STNodeControl[] controls) {
-            if (controls == null) throw new ArgumentNullException("添加对象不能为空");
+            if (controls == null) throw new ArgumentNullException("Add object cannot be empty.");
             this.EnsureSpace(controls.Length);
             foreach (var op in controls) {
-                if (op == null) throw new ArgumentNullException("添加对象不能为空");
+                if (op == null) throw new ArgumentNullException("Add object cannot be empty.");
                 if (-1 == this.IndexOf(op)) {
                     op.Owner = m_owner;
                     m_controls[this._Count++] = op;
@@ -65,9 +65,9 @@ namespace ST.Library.UI.NodeEditor
 
         public void Insert(int index, STNodeControl control) {
             if (index < 0 || index >= this._Count)
-                throw new IndexOutOfRangeException("索引越界");
+                throw new IndexOutOfRangeException("Index out of bounds.");
             if (control == null)
-                throw new ArgumentNullException("插入对象不能为空");
+                throw new ArgumentNullException("Insert object cannot be empty.");
             this.EnsureSpace(1);
             for (int i = this._Count; i > index; i--)
                 m_controls[i] = m_controls[i - 1];
@@ -92,26 +92,40 @@ namespace ST.Library.UI.NodeEditor
 
         public void RemoveAt(int index) {
             if (index < 0 || index >= this._Count)
-                throw new IndexOutOfRangeException("索引越界");
-            this._Count--;
+                throw new IndexOutOfRangeException("Index out of bounds.");
+
             m_controls[index].Owner = null;
+
+            /*
+            this._Count--;
             for (int i = index, Len = this._Count; i < Len; i++)
                 m_controls[i] = m_controls[i + 1];
+            */
+
+            for (int i = index; i < this._Count; i++)
+            {
+                if (i == m_controls.Length - 1)
+                    m_controls[i] = null;
+                else
+                    m_controls[i] = m_controls[i + 1];
+            }
+            this._Count--;
+
             this.Redraw();
         }
 
         public STNodeControl this[int index] {
             get {
                 if (index < 0 || index >= this._Count)
-                    throw new IndexOutOfRangeException("索引越界");
+                    throw new IndexOutOfRangeException("Index out of bounds.");
                 return m_controls[index];
             }
-            set { throw new InvalidOperationException("禁止重新赋值元素"); }
+            set { throw new InvalidOperationException("Reassignment of elements not allowed."); }
         }
 
         public void CopyTo(Array array, int index) {
             if (array == null)
-                throw new ArgumentNullException("数组不能为空");
+                throw new ArgumentNullException("Array cannot be empty.");
             m_controls.CopyTo(array, index);
         }
 
@@ -128,9 +142,9 @@ namespace ST.Library.UI.NodeEditor
                 yield return m_controls[i];
         }
         /// <summary>
-        /// 确认空间是否足够 空间不足扩大容量
+        /// Confirm whether there is enough space. Insufficient space to expand capacity.
         /// </summary>
-        /// <param name="elements">需要增加的个数</param>
+        /// <param name="elements">Need to increase the number</param>
         private void EnsureSpace(int elements) {
             if (elements + this._Count > m_controls.Length) {
                 STNodeControl[] arrTemp = new STNodeControl[Math.Max(m_controls.Length * 2, elements + this._Count)];

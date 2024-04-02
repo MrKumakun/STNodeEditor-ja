@@ -763,7 +763,8 @@ namespace ST.Library.UI.NodeEditor
             if (nfi.Node != null) {
                 nfi.Node.OnMouseDown(new MouseEventArgs(e.Button, e.Clicks, (int)m_pt_down_in_canvas.X - nfi.Node.Left, (int)m_pt_down_in_canvas.Y - nfi.Node.Top, e.Delta));
 
-                if (e.Button == MouseButtons.Left)
+                //TODO: bug? - menu does not appear when right-clicking.
+                //if (e.Button == MouseButtons.Left)
                 {
                     bool bCtrlDown = (Control.ModifierKeys & Keys.Control) == Keys.Control;
                     if (bCtrlDown)
@@ -809,7 +810,9 @@ namespace ST.Library.UI.NodeEditor
                         }
                     }
                     else
+                    {
                         m_node_down = nfi.Node;
+                    }
                 }
             } else {
                 if (e.Button == MouseButtons.Left)

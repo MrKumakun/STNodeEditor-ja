@@ -95,6 +95,7 @@ namespace ST.Library.UI.NodeEditor
         private static Type m_t_double = typeof(double);
         private static Type m_t_string = typeof(string);
         private static Type m_t_bool = typeof(bool);
+        private static Type m_t_long = typeof(long);
 
         private StringFormat m_sf;
 
@@ -125,6 +126,7 @@ namespace ST.Library.UI.NodeEditor
             if (t == m_t_double) return double.Parse(strText);
             if (t == m_t_string) return strText;
             if (t == m_t_bool) return bool.Parse(strText);
+            if (t == m_t_long) return long.Parse(strText);
             if (t.IsEnum) {
                 return Enum.Parse(t, strText);
             } else if (t.IsArray) {

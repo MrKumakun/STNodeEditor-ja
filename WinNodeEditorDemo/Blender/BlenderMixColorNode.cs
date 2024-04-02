@@ -5,6 +5,7 @@ using System.Text;
 
 using ST.Library.UI.NodeEditor;
 using System.Drawing;
+using System.Threading;
 
 namespace WinNodeEditorDemo.Blender
 {
@@ -71,6 +72,10 @@ namespace WinNodeEditorDemo.Blender
         private STNodeColorButton m_ctrl_btn_1;
         private STNodeColorButton m_ctrl_btn_2;
 
+        private STNodeOption m_in_clr1;
+        private STNodeOption m_in_clr2;
+
+
         protected override void OnCreate() {
             base.OnCreate();
             this.TitleColor = Color.FromArgb(200, Color.DarkKhaki);
@@ -84,8 +89,16 @@ namespace WinNodeEditorDemo.Blender
             this.InputOptions.Add(STNodeOption.Empty);
             this.InputOptions.Add(STNodeOption.Empty);
             this.InputOptions.Add("", typeof(float), true);
-            this.InputOptions.Add("Color1", typeof(Color), true);
-            this.InputOptions.Add("Color2", typeof(Color), true);
+
+            m_in_clr1 = new STNodeOption("Color1", typeof(Color), true);
+            m_in_clr2 = new STNodeOption("Color2", typeof(Color), true);
+
+            this.InputOptions.Add(m_in_clr1);
+            this.InputOptions.Add(m_in_clr2);
+
+            m_in_clr1.DataTransfer += new STNodeOptionEventHandler(m_in_Color_DataTransfer);
+            m_in_clr2.DataTransfer += new STNodeOptionEventHandler(m_in_Color_DataTransfer);
+
 
             m_ctrl_progess = new STNodeProgress();      //创建控件并添加到节点中
             m_ctrl_progess.Text = "Fac";
@@ -126,5 +139,26 @@ namespace WinNodeEditorDemo.Blender
             this.Owner.SetTypeColor(typeof(float), Color.Gray);
             this.Owner.SetTypeColor(typeof(Color), Color.Yellow);
         }
+
+        void m_in_Color_DataTransfer(object sender, STNodeOptionEventArgs e)
+        {
+            if (e.Status == ConnectionStatus.Connected)
+            {
+                if (sender == m_in_clr1)
+                {
+                    if (e.TargetOption.Data != null) Color1 = (Color)e.TargetOption.Data;//TargetOption为触发此事件的Option
+                }
+                else
+                {
+                    if (e.TargetOption.Data != null) Color2 = (Color)e.TargetOption.Data;
+                }
+            }
+            else
+            {
+                if (sender == m_in_clr1) Color1 = Color.Gray; else Color2 = Color.Gray;
+            }
+            this.Invalidate();
+        }
+
     }
 }

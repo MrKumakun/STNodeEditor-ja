@@ -49,4 +49,38 @@ namespace WinNodeEditorDemo.NumberNode
             dt.Graphics.DrawString(this._Number.ToString(), this.Font, Brushes.White, op.TextRectangle, m_sf);
         }
     }
+
+
+    /// <summary>
+    /// 新しい形式による実装
+    /// </summary>
+    [STNode("/Number", "Crystal_lz", "2212233137@qq.com", "st233.com", "Number input node")]
+    public class NumberInputNewNode : NumberNode
+    {
+        private long _Number;
+        [STNodeProperty("Input", "this is input number")]
+        public long Number
+        {
+            get { return _Number; }
+            set
+            {
+                _Number = value;
+                this.SetOptionText(m_op_number, _Number.ToString());
+                m_op_number.TransferData(value); //将数据向下传递
+                this.Invalidate();
+            }
+        }
+
+        private STNodeOption m_op_number;       //输出选项
+
+        protected override void OnCreate()
+        {
+            base.OnCreate();
+            this.Title = "NumberInputNew";
+            m_op_number = this.OutputOptions.Add("0", typeof(long), false);
+        }
+
+
+    }
+
 }

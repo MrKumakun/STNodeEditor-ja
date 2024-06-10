@@ -422,6 +422,13 @@ namespace ST.Library.UI.NodeEditor
             set { mAllowNodeGraphLoops = value; }
         }
 
+        private bool mResetViewWhenEmpty = true;
+        public bool ResetViewWhenEmpty
+        {
+            get { return mResetViewWhenEmpty; }
+            set { mResetViewWhenEmpty = value; }
+        }
+
         #endregion
 
         #region protected properties ----------------------------------------------------------------------------------------
@@ -475,6 +482,7 @@ namespace ST.Library.UI.NodeEditor
             this.MinimumSize = new Size(100, 100);
             this.Size = new Size(200, 200);
             this.AllowDrop = true;
+            this.mRoundedCornerRadius = 5;
 
             m_real_canvas_x = this._CanvasOffsetX = 10;
             m_real_canvas_y = this._CanvasOffsetY = 10;

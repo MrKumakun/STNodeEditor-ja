@@ -247,7 +247,7 @@ namespace ColorVision.Engine.Templates.Flow
                     e.Cancel = true;
                 IsOptionDisConnected = false;
             };
-            STNodeEditor.OptionDisConnected += (s, e) =>
+            STNodeEditor.OptionDisconnected += (s, e) =>
             {
                 IsOptionDisConnected = true;
             };
@@ -332,7 +332,7 @@ namespace ColorVision.Engine.Templates.Flow
 
         public void ApplyTreeLayout(int startX, int startY, int horizontalSpacing, int verticalSpacing)
         {
-            ConnectionInfo = STNodeEditor.GetConnectionInfo();
+            //ConnectionInfo = STNodeEditor.GetConnectionInfo();
             STNode rootNode = null;
             if (rootNode == null) return;
             int currentY = startY;
